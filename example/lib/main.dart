@@ -22,13 +22,6 @@ class SearchBarDemoHome extends StatefulWidget {
 
 class _SearchBarDemoHomeState extends State<SearchBarDemoHome> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  late SearchBar searchBar;
-
-  AppBar buildAppBar(BuildContext context) {
-    return new AppBar(
-        title: new Text('Search Bar Demo'),
-        actions: [searchBar.getSearchAction(context)]);
-  }
 
   void onSubmitted(String value) {
     setState(() {
@@ -38,29 +31,25 @@ class _SearchBarDemoHomeState extends State<SearchBarDemoHome> {
         return;
       }
 
-      ScaffoldMessenger.maybeOf(context)
-          ?.showSnackBar(new SnackBar(content: new Text('You wrote "$value"!')));
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+          new SnackBar(content: new Text('You wrote "$value"!')));
     });
-  }
-
-  _SearchBarDemoHomeState() {
-    searchBar = new SearchBar(
-        inBar: false,
-        buildDefaultAppBar: buildAppBar,
-        setState: setState,
-        onSubmitted: onSubmitted,
-        onCleared: () {
-          print("Search bar has been cleared");
-        },
-        onClosed: () {
-          print("Search bar has been closed");
-        });
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: searchBar.build(context),
+      appBar: SearchAppBar(
+          inBar: false,
+          title: new Text('Search Bar Demo'),
+          // setState: setState,
+          onSubmitted: onSubmitted,
+          onCleared: () {
+            print("Search bar has been cleared");
+          },
+          onClosed: () {
+            print("Search bar has been closed");
+          }),
       key: _scaffoldKey,
       body: new Center(
           child: new Text("Don't look at me! Press the search button!")),
