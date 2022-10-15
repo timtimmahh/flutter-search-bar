@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'flutter_search_bar_base.dart';
 import 'types.dart';
 
-class SearchAppBar extends StatelessWidget
-    with SearchBarMixin
-    implements PreferredSizeWidget {
+class SearchAppBar extends StatelessWidget with SearchBarMixin implements PreferredSizeWidget {
   SearchAppBar({
     Key? key,
     this.onSubmitted,
@@ -45,10 +43,12 @@ class SearchAppBar extends StatelessWidget
     this.toolbarTextStyle,
     this.titleTextStyle,
     this.systemOverlayStyle,
+    RxBool? isSearching,
   })  : textController = textController ?? TextEditingController(),
         customLeading = leading,
         customTitle = title,
         customActions = actions,
+        isSearching = isSearching ?? false.obs,
         super(key: key) {
     initSearchBar();
   }
@@ -123,8 +123,7 @@ class SearchAppBar extends StatelessWidget
   final TextStyle? toolbarTextStyle;
 
   @override
-  Size get preferredSize => Size.fromHeight(
-      (toolbarHeight ?? kToolbarHeight) + (bottom?.preferredSize.height ?? 0));
+  Size get preferredSize => Size.fromHeight((toolbarHeight ?? kToolbarHeight) + (bottom?.preferredSize.height ?? 0));
 
   @override
   final bool clearOnSubmit;
@@ -158,6 +157,9 @@ class SearchAppBar extends StatelessWidget
 
   @override
   final TextEditingController textController;
+
+  @override
+  final RxBool isSearching;
 
   @override
   Widget buildSearchBar(BuildContext context, RxBool isSearching) => AppBar(

@@ -35,7 +35,7 @@ mixin SearchBarMixin on StatelessWidget {
   String get hintText;
 
   /// Whether search is currently active.
-  final RxBool isSearching = false.obs;
+  RxBool get isSearching;
 
   /// A callback which is invoked each time the text field's value changes
   TextFieldChangeCallback? get onChanged;

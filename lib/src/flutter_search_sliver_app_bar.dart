@@ -50,10 +50,12 @@ class SearchSliverAppBar extends StatelessWidget with SearchBarMixin {
     this.toolbarTextStyle,
     this.titleTextStyle,
     this.systemOverlayStyle,
+    RxBool? isSearching,
   })  : textController = textController ?? TextEditingController(),
         customLeading = leading,
         customTitle = title,
         customActions = actions,
+        isSearching = isSearching ?? false.obs,
         super(key: key) {
     initSearchBar();
   }
@@ -176,6 +178,9 @@ class SearchSliverAppBar extends StatelessWidget with SearchBarMixin {
   final TextEditingController textController;
 
   @override
+  final RxBool isSearching;
+
+  @override
   Widget buildSearchBar(BuildContext context, RxBool isSearching) => SliverAppBar(
       leading: getLeading(context, isSearching),
       automaticallyImplyLeading: automaticallyImplyLeading,
@@ -207,7 +212,5 @@ class SearchSliverAppBar extends StatelessWidget with SearchBarMixin {
       titleTextStyle: titleTextStyle,
       systemOverlayStyle: systemOverlayStyle,
       title: getTitle(context, isSearching),
-      actions: getActions(context, isSearching)
-  );
-
+      actions: getActions(context, isSearching));
 }
